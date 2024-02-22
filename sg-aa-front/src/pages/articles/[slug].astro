@@ -1,0 +1,36 @@
+---
+import fetchApi from '../../lib/strapi';
+import type Article from '../../interfaces/article';
+import createSlug from '../../lib/utils';
+
+
+export async function getStaticPaths() {
+  const articles = await fetchApi<Article[]>({
+    endpoint: 'articles',
+    wrappedByKey: 'data',
+  });
+
+  return articles.map((article) => ({
+    params: { slug: createSlug(article.attributes.title) },
+    props: article,
+  }));
+}
+type Props = Article;
+
+const article = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{article.attributes.title}</title>
+  </head>
+
+  <body>
+    <main>
+
+      <h1>{JSON.stringify(article.attributes.title)}</h1>
+      <pre>{JSON.stringify(article.attributes)}</pre>
+
+    </main>
+  </body>
+</html>
