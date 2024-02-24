@@ -1,13 +1,15 @@
 ---
 import fetchApi from '../../lib/strapi';
-import type Article from '../../interfaces/article';
+import type Article from "../../interfaces/Article";
 import createSlug from '../../lib/utils';
+import MarkdownRenderer from '../../components/MarkdownRenderer.astro'
 
 
 export async function getStaticPaths() {
   const articles = await fetchApi<Article[]>({
     endpoint: 'articles',
     wrappedByKey: 'data',
+    query: { populate: 'tags,media'}
   });
 
   return articles.map((article) => ({
@@ -26,11 +28,15 @@ const article = Astro.props;
   </head>
 
   <body>
-    <main>
-
-      <h1>{JSON.stringify(article.attributes.title)}</h1>
-      <pre>{JSON.stringify(article.attributes)}</pre>
+    <main class="container mx-auto">
+      <h1>{article.attributes.title}</h1>
+      <img src={`${import.meta.env.STRAPI_URL}` + article.attributes.media.data.attributes.url}>
+      <div class="prose columns-3"> 
+        <MarkdownRenderer markdown={article.attributes.content}>
+         
+        </MarkdownRenderer>
+      </div>
 
     </main>
   </body>
-</html>
+</html>../../interfaces/Artcile../../interfaces/Article

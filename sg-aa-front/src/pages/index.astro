@@ -1,15 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 
-import fetchApi from '../lib/strapi';
 import createSlug from '../lib/utils';
 
-import type Article from '../interfaces/article';
+import fetchApi from '../lib/strapi';
+import type Article from '../interfaces/Article';
 
 const articles = await fetchApi<Article[]>({
   endpoint: 'articles', // the content type to fetch
-  wrappedByKey: 'data', // the key to unwrap the response
+  wrappedByKey: 'data', // the key to unwrap the response,
+  query: { populate: 'tags,media'}
 });
 ---
 
@@ -20,6 +20,7 @@ const articles = await fetchApi<Article[]>({
 			articles.map((article) => (
 			  <a href={`/articles/${createSlug(article.attributes.title)}/`}>
 				{article.attributes.title}
+				<pre class="whitespace-pre">{JSON.stringify(article, null, 2)}</pre>
 			  </a>
 			))
 		  }
@@ -85,3 +86,4 @@ const articles = await fetchApi<Article[]>({
 		padding: 0;
 	}
 </style>
+../interfaces/Article../interfaces/Artcile../interfaces/Media../interfaces/Article
