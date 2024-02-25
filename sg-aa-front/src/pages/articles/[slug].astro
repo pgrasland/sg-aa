@@ -3,6 +3,7 @@ import fetchApi from '../../lib/strapi';
 import type Article from "../../interfaces/Article";
 import createSlug from '../../lib/utils';
 import MarkdownRenderer from '../../components/MarkdownRenderer.astro'
+import Layout from '../../layouts/Layout.astro';
 
 
 export async function getStaticPaths() {
@@ -21,22 +22,17 @@ type Props = Article;
 
 const article = Astro.props;
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>{article.attributes.title}</title>
-  </head>
+<Layout title={article.attributes.title}>
 
-  <body>
     <main class="container mx-auto">
       <h1>{article.attributes.title}</h1>
       <img src={`${import.meta.env.STRAPI_URL}` + article.attributes.media.data.attributes.url}>
-      <div class="prose columns-3"> 
+      <div class="prose"> 
         <MarkdownRenderer markdown={article.attributes.content}>
          
         </MarkdownRenderer>
       </div>
 
     </main>
-  </body>
-</html>../../interfaces/Artcile../../interfaces/Article
+
+</Layout>
