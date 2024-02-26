@@ -1,7 +1,7 @@
-import type Media from "./Media";
-import type Tag from "./Tag";
+import type IMedia from "./IMedia";
+import type Tag from "./ITag";
 
-export default interface Article {
+export default interface IArticle {
   id: number;
   attributes: {
     slug: string;
@@ -12,11 +12,12 @@ export default interface Article {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+    pinned: boolean;
     tags: {
       data: Tag[];
     };
     media: {
-      data: Media;
+      data: IMedia;
     };
   };
 }

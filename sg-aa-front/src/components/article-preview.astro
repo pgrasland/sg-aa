@@ -1,0 +1,25 @@
+---
+import type IArticle from '../interfaces/IArticle';
+import { Image } from 'astro:assets'
+import MarkdownRenderer from './markdown-renderer.astro'
+
+
+interface Props {
+    article: IArticle
+}
+const { article } = Astro.props;
+---
+
+<div>
+    <h1>{ article.attributes.title }</h1>
+    <ul class="flex flex-row gap-1">
+        {
+            article.attributes.tags.data.map(tag => (
+                     <li><a href={`/tags/${tag.attributes.tag}`}>{tag.attributes.tag}</a></li>
+                )
+            )
+        }
+    </ul>
+    <Image src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
+    <MarkdownRenderer markdown={article.attributes.summary}></MarkdownRenderer>
+</div>

@@ -1,4 +1,4 @@
-export default interface Article {
+export default interface ITag {
   id: number;
   attributes: {
     tag: string;

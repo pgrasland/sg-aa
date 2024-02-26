@@ -1,13 +1,13 @@
 ---
 import fetchApi from '../../lib/strapi';
-import type Article from "../../interfaces/Article";
+import type IArticle from "../../interfaces/IArticle";
 import createSlug from '../../lib/utils';
-import MarkdownRenderer from '../../components/MarkdownRenderer.astro'
+import MarkdownRenderer from '../../components/markdown-renderer.astro'
 import Layout from '../../layouts/Layout.astro';
 
 
 export async function getStaticPaths() {
-  const articles = await fetchApi<Article[]>({
+  const articles = await fetchApi<IArticle[]>({
     endpoint: 'articles',
     wrappedByKey: 'data',
     query: { populate: 'tags,media'}
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     props: article,
   }));
 }
-type Props = Article;
+type Props = IArticle;
 
 const article = Astro.props;
 ---

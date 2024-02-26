@@ -1,4 +1,6 @@
 ---
+import Navbar from '../components/navbar.astro'
+import Footer from '../components/footer.astro'
 interface Props {
 	title: string;
 }
@@ -16,16 +18,17 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="text-black">
+	<body>
+		<Navbar />
 		<slot />
-	</body>
+		<Footer />
+	  </body>
 </html>
 <style is:global>
-	:root {
-
-	}
-	html {
-
-	}
+ /* Improve Page speed */
+/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+img {
+	content-visibility: auto;
+}
 
 </style>

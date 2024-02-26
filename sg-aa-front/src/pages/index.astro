@@ -4,25 +4,36 @@ import Layout from '../layouts/Layout.astro';
 import createSlug from '../lib/utils';
 
 import fetchApi from '../lib/strapi';
-import type Article from '../interfaces/Article';
+import type IArticle from '../interfaces/IArticle';
+import Container from '../components/container.astro';
+import ArticlePreview from "../components/article-preview.astro"
 
-const articles = await fetchApi<Article[]>({
+const articles = await fetchApi<IArticle[]>({
   endpoint: 'articles', // the content type to fetch
   wrappedByKey: 'data', // the key to unwrap the response,
-  query: { populate: 'tags,media'}
+  query: { populate: 'tags,media', 'sort[0]': 'pinned:desc', 'sort[1]': 'publishedAt:desc'},
 });
+
+const pinnedArticle = articles.find(article => article.attributes.pinned );
+const otherArticles = articles.filter(article => article !== pinnedArticle);
+
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<ul>
+<Layout title="Agir Autrement - Saint Grégoire">
+	<Container>
+	  <main>
+		{ pinnedArticle && 
+		<div class="grid gap-10 ">
+					<ArticlePreview article={pinnedArticle} />
+		</div>
+		}
+		<div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
 		  {
-			articles.map((article) => (
-			  <li><a href={`/articles/${createSlug(article.attributes.title)}/`}>
-				{article.attributes.title}
-			  </a></li>
+			otherArticles.map(article => (
+				<ArticlePreview article={article} />
 			))
 		  }
-		</ul>
+		</div>
 	  </main>
-</Layout>
+	</Container>
+  </Layout>

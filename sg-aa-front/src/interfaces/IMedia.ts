@@ -1,4 +1,4 @@
-export default interface Media {
+export default interface IMedia {
   id: number;
   attributes: {
     name: string;
@@ -8,6 +8,7 @@ export default interface Media {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
-    tags: string[];
+    width: number;
+    height: number;
   };
 }
