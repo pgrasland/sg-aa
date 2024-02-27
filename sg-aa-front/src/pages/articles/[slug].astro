@@ -4,6 +4,8 @@ import type IArticle from "../../interfaces/IArticle";
 import createSlug from '../../lib/utils';
 import MarkdownRenderer from '../../components/markdown-renderer.astro'
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets'
+
 
 
 export async function getStaticPaths() {
@@ -26,7 +28,7 @@ const article = Astro.props;
 
     <main class="container mx-auto">
       <h1>{article.attributes.title}</h1>
-      <img src={`${import.meta.env.STRAPI_URL}` + article.attributes.media.data.attributes.url}>
+      <Image src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
       <div class="prose"> 
         <MarkdownRenderer markdown={article.attributes.content}>
          
