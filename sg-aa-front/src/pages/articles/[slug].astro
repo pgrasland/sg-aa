@@ -25,11 +25,15 @@ type Props = IArticle;
 const article = Astro.props;
 ---
 <Layout title={article.attributes.title}>
-
-    <main class="container mx-auto">
-      <h1>{article.attributes.title}</h1>
-      <Image src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
-      <div class="prose"> 
+    <main class="w-full flex flex-col gap-8">
+      <h1 class=" container max-w-4xl  mx-auto text-6xl font-extrabold">{article.attributes.title}</h1>
+      <div class="prose prose-xl container max-w-4xl mx-auto "> 
+        <MarkdownRenderer markdown={article.attributes.summary}>
+         
+        </MarkdownRenderer>
+      </div>
+      <Image class="w-full h-auto max-h-[40rem] object-cover" src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
+      <div class="prose prose-xl container max-w-4xl  mx-auto "> 
         <MarkdownRenderer markdown={article.attributes.content}>
          
         </MarkdownRenderer>
