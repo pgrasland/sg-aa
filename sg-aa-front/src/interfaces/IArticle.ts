@@ -1,5 +1,5 @@
 import type IMedia from "./IMedia";
-import type Tag from "./ITag";
+import type ITag from "./ITag";
 
 export default interface IArticle {
   id: number;
@@ -14,7 +14,7 @@ export default interface IArticle {
     publishedAt: string;
     pinned: boolean;
     tags: {
-      data: Tag[];
+      data: ITag[];
     };
     media: {
       data: IMedia;

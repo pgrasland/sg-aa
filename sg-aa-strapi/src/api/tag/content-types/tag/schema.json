@@ -24,6 +24,18 @@
     "slug": {
       "type": "uid",
       "targetField": "tag"
+    },
+    "color": {
+      "type": "enumeration",
+      "enum": [
+        "red",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "purple",
+        "pink"
+      ]
     }
   }
 }

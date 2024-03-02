@@ -473,6 +473,9 @@ export interface ApiTagTag extends Schema.CollectionType {
       'api::article.article'
     >;
     slug: Attribute.UID<'api::tag.tag', 'tag'>;
+    color: Attribute.Enumeration<
+      ['red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

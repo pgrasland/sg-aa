@@ -3,10 +3,11 @@ import type ITag from '../interfaces/ITag';
 
 interface Props {
 	tag: ITag;
-    color: 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink'
 }
 
-const { tag, color } = Astro.props;
+const { tag } = Astro.props;
+
+const color = tag.attributes.color;
 
 
 let colorClasses = 'bg-gray-50 text-gray-600 ring-gray-500/50'
@@ -15,7 +16,7 @@ switch (color) {
         colorClasses = 'bg-red-50 text-red-600 ring-red-500/50';
         break;
     case 'yellow':
-        colorClasses = 'bg-yellow-50 text-yellow-600 ring-yellow-500/50';
+        colorClasses = 'bg-yellow-50 text-yellow-700 ring-yellow-500/50';
         break;
     case 'green':
         colorClasses = 'bg-green-50 text-green-600 ring-green-500/50';
@@ -39,4 +40,4 @@ switch (color) {
 
 ---
 
-<a href={ "/tags/" + tag.attributes.slug} class={ 'inline-flex w-fit items-center rounded-md px-2 py-1 ring-1 ring-inset' + colorClasses}>{tag.attributes.tag}</a>
+<a href={ "/tags/" + tag.attributes.slug} class={ 'inline-flex w-fit items-center rounded-md px-2 py-1 ring-1 ring-inset ' + colorClasses}>{tag.attributes.tag}</a>
