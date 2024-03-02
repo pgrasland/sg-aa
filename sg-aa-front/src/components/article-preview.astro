@@ -18,7 +18,7 @@ const { article, showSummary } = Astro.props;
     
     <div class='grid grid-cols-2 gap-4 '>
         <Image class={ !showSummary ? 'col-span-full' : ''} loading="eager" src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
-        { showSummary && <div class="prose line-clamp-3 first:prose-p:mt-0"><MarkdownRenderer markdown={article.attributes.summary}></MarkdownRenderer></div>     }
+        { showSummary && <div class="prose prose-lg text-black line-clamp-3 first:prose-p:mt-0"><MarkdownRenderer markdown={article.attributes.summary}></MarkdownRenderer></div>     }
     </div>
     <ul class="list-none my-2 flex flex-row gap-4 text-lg flex-wrap ">
         {

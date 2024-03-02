@@ -28,7 +28,7 @@ const article = Astro.props;
 
 ---
 <Layout title={article.attributes.title}>
-    <main class="w-full flex flex-col gap-8">
+    <main class="w-full flex flex-col gap-8 ">
       <h1 class="container max-w-4xl mx-2 lg:mx-auto text-6xl font-extrabold">{article.attributes.title}</h1>
       <ul class="container max-w-4xl mx-2 lg:mx-auto list-none flex flex-row gap-4 text-xl ">
         {
@@ -38,13 +38,13 @@ const article = Astro.props;
           )
         }
       </ul>
-      <div class="prose prose-lg container max-w-4xl mx-2 lg:mx-auto "> 
+      <div class="prose prose-lg text-black container max-w-4xl mx-2 lg:mx-auto "> 
         <MarkdownRenderer markdown={article.attributes.summary}>
          
         </MarkdownRenderer>
       </div>
       <Image class="px-4 w-full h-auto max-h-[40rem] object-cover" src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
-      <div class="prose prose-lg container max-w-4xl  mx-2 lg:mx-auto "> 
+      <div class="prose prose-lg text-black container max-w-4xl  mx-2 lg:mx-auto "> 
         <MarkdownRenderer markdown={article.attributes.content}>
          
         </MarkdownRenderer>
