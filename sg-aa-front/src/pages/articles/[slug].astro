@@ -1,12 +1,13 @@
 ---
 import fetchApi from '../../lib/strapi';
 import type IArticle from "../../interfaces/IArticle";
-import createSlug from '../../lib/utils';
 import MarkdownRenderer from '../../components/markdown-renderer.astro'
+import Badge from '../../components/badge.astro'
+
 import Layout from '../../layouts/Layout.astro';
+
 import { Image } from 'astro:assets'
-
-
+import { TAG_COLORS } from '../../interfaces/ITag';
 
 export async function getStaticPaths() {
   const articles = await fetchApi<IArticle[]>({
@@ -16,24 +17,35 @@ export async function getStaticPaths() {
   });
 
   return articles.map((article) => ({
-    params: { slug: createSlug(article.attributes.title) },
+    params: { slug: article.attributes.slug },
     props: article,
   }));
 }
 type Props = IArticle;
 
 const article = Astro.props;
+
+
+
 ---
 <Layout title={article.attributes.title}>
     <main class="w-full flex flex-col gap-8">
-      <h1 class=" container max-w-4xl  mx-auto text-6xl font-extrabold">{article.attributes.title}</h1>
-      <div class="prose prose-xl container max-w-4xl mx-auto "> 
+      <h1 class="container max-w-4xl mx-2 lg:mx-auto text-6xl font-extrabold">{article.attributes.title}</h1>
+      <ul class="container max-w-4xl mx-2 lg:mx-auto list-none flex flex-row gap-4 text-xl ">
+        {
+          article.attributes.tags.data.map((tag, index) => (
+                 <li><Badge tag={tag} color={TAG_COLORS[index%7]}></Badge></li>
+              )
+          )
+        }
+      </ul>
+      <div class="prose prose-lg container max-w-4xl mx-2 lg:mx-auto "> 
         <MarkdownRenderer markdown={article.attributes.summary}>
          
         </MarkdownRenderer>
       </div>
-      <Image class="w-full h-auto max-h-[40rem] object-cover" src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
-      <div class="prose prose-xl container max-w-4xl  mx-auto "> 
+      <Image class="px-4 w-full h-auto max-h-[40rem] object-cover" src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
+      <div class="prose prose-lg container max-w-4xl  mx-2 lg:mx-auto "> 
         <MarkdownRenderer markdown={article.attributes.content}>
          
         </MarkdownRenderer>

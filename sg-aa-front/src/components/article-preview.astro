@@ -2,8 +2,9 @@
 import type IArticle from '../interfaces/IArticle';
 import { Image } from 'astro:assets'
 import MarkdownRenderer from './markdown-renderer.astro'
+import { TAG_COLORS } from '../interfaces/ITag';
+import Badge from './badge.astro';
 
-import createSlug from '../lib/utils';
 
 interface Props {
     article: IArticle
@@ -11,15 +12,15 @@ interface Props {
 const { article } = Astro.props;
 ---
 
-<a href={'/articles/'+ createSlug(article.attributes.title)}>
+<a href={'/articles/'+ article.attributes.slug}>
     <h1>{ article.attributes.title }</h1>
-    <ul class="flex flex-row gap-1">
-        {
-            article.attributes.tags.data.map(tag => (
-                     <li><a href={`/tags/${tag.attributes.tag}`}>{tag.attributes.tag}</a></li>
-                )
+    <ul class="container max-w-4xl list-none my-2 flex flex-row gap-4 text-xl flex-wrap ">
+    {
+        article.attributes.tags.data.map((tag, index) => (
+                <li><Badge tag={tag} color={TAG_COLORS[index%7]}></Badge></li>
             )
-        }
+        )
+    }
     </ul>
     <Image src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
     

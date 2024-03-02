@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-import createSlug from '../lib/utils';
 
 import fetchApi from '../lib/strapi';
 import type IArticle from '../interfaces/IArticle';
@@ -30,7 +29,7 @@ const otherArticles = articles.filter(article => article !== pinnedArticle);
 		<div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
 		  {
 			otherArticles.map(article => (
-				<ArticlePreview article={article} />
+				<div><ArticlePreview article={article} /></div>
 			))
 		  }
 		</div>

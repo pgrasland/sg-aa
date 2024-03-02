@@ -1,0 +1,42 @@
+---
+import type ITag from '../interfaces/ITag';
+
+interface Props {
+	tag: ITag;
+    color: 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink'
+}
+
+const { tag, color } = Astro.props;
+
+
+let colorClasses = 'bg-gray-50 text-gray-600 ring-gray-500/50'
+switch (color) {
+    case 'red':
+        colorClasses = 'bg-red-50 text-red-600 ring-red-500/50';
+        break;
+    case 'yellow':
+        colorClasses = 'bg-yellow-50 text-yellow-600 ring-yellow-500/50';
+        break;
+    case 'green':
+        colorClasses = 'bg-green-50 text-green-600 ring-green-500/50';
+        break;
+    case 'blue':
+        colorClasses = 'bg-blue-50 text-blue-600 ring-blue-500/50';
+        break;
+    case 'indigo':
+        colorClasses = 'bg-indigo-50 text-indigo-600 ring-indigo-500/50';
+        break;
+    case 'purple':
+        colorClasses = 'bg-purple-50 text-purple-600 ring-purple-500/50';
+        break;
+    case 'pink':
+        colorClasses = 'bg-pink-50 text-pink-600 ring-pink-500/50';
+        break;
+    default :
+        colorClasses = 'bg-gray-50 text-gray-600 ring-gray-500/50';
+        break;
+}
+
+---
+
+<a href={ "/tags/" + tag.attributes.slug} class={ 'inline-flex w-fit items-center rounded-md px-2 py-1 ring-1 ring-inset' + colorClasses}>{tag.attributes.tag}</a>
