@@ -29,6 +29,9 @@ const menu: Menu[] = [
   },
 ];
 
+const currentPath = Astro.url.pathname;
+
+
 ---
 
 <Container>
@@ -42,7 +45,7 @@ const menu: Menu[] = [
           menu.map((item) => (
             <a
               href={item.href}
-              class="px-5 py-2 text-lg  underline-offset-8 hover:underline hover:text-green-800">
+              class={ `px-5 py-2 text-lg underline-offset-8 hover:underline hover:text-green-800 ${currentPath.indexOf(item.href) === 0? 'text-green-800 underline ': '' }`}>
               {item.label}
             </a>
           ))
