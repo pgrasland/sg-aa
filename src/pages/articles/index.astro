@@ -1,19 +1,21 @@
 ---
-
-
-import ListLayout from '../../layouts/ListLayout.astro';
-import type IArticle from '../../interfaces/IArticle';
-import fetchApi from '../../lib/strapi';
+import type IArticle from "../../interfaces/IArticle";
+import ListLayout from "../../layouts/ListLayout.astro";
+import fetchApi from "../../lib/strapi";
 
 const articles = await fetchApi<IArticle[]>({
-  endpoint: 'articles', // the content type to fetch
-  wrappedByKey: 'data', // the key to unwrap the response,
-  query: { populate: 'tags,media', 'sort[0]': 'pinned:desc', 'sort[1]': 'publishedAt:desc'},
+  endpoint: "articles", // the content type to fetch
+  wrappedByKey: "data", // the key to unwrap the response,
+  query: {
+    populate: "tags,media",
+    "sort[0]": "pinned:desc",
+    "sort[1]": "publishedAt:desc",
+  },
 });
 
-const pinnedArticle = articles.find(article => article.attributes.pinned ) || articles[0];
-const otherArticles = articles.filter(article => article !== pinnedArticle);
-
+const pinnedArticle =
+  articles.find((article) => article.attributes.pinned) || articles[0];
+const otherArticles = articles.filter((article) => article !== pinnedArticle);
 ---
 
-<ListLayout pinnedArticle={pinnedArticle} otherArticles={otherArticles}>
+<ListLayout pinnedArticle={pinnedArticle} otherArticles={otherArticles} />

@@ -1,34 +1,41 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
-
-import fetchApi from '../lib/strapi';
-import type IArticle from '../interfaces/IArticle';
-import Container from '../components/container.astro';
-import ArticlePreview from "../components/article-preview.astro"
+import ArticlePreview from "../components/article-preview.astro";
+import Container from "../components/container.astro";
+import type IArticle from "../interfaces/IArticle";
+import fetchApi from "../lib/strapi";
 
 const articles = await fetchApi<IArticle[]>({
-  endpoint: 'articles', // the content type to fetch
-  wrappedByKey: 'data', // the key to unwrap the response,
-  query: { populate: 'tags,media', 'sort[0]': 'pinned:desc', 'sort[1]': 'publishedAt:desc'},
+  endpoint: "articles", // the content type to fetch
+  wrappedByKey: "data", // the key to unwrap the response,
+  query: {
+    populate: "tags,media",
+    "sort[0]": "pinned:desc",
+    "sort[1]": "publishedAt:desc",
+  },
 });
 
-const pinnedArticle = articles.find(article => article.attributes.pinned ) || articles[0];
-const otherArticles = articles.filter(article => article !== pinnedArticle);
-
+const pinnedArticle =
+  articles.find((article) => article.attributes.pinned) || articles[0];
+const otherArticles = articles.filter((article) => article !== pinnedArticle);
 ---
 
 <Layout title="Agir Autrement - Saint Grégoire">
-	<Container>
-	  <main class="grid gap-10 ">
-		<ArticlePreview article={pinnedArticle} showSummary={true}/>
-		<div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3 items-stretch justify-stretch">
-		  {
-			otherArticles.map(article => (
-				<div><ArticlePreview article={article} showSummary={false} /></div>
-			))
-		  }
-		</div>
-	  </main>
-	</Container>
-  </Layout>
+  <Container>
+    <main class="grid gap-10">
+      <ArticlePreview article={pinnedArticle} showSummary={true} />
+      <div
+        class="mt-10 grid items-stretch justify-stretch gap-10 md:grid-cols-2 lg:gap-10 xl:grid-cols-3"
+      >
+        {
+          otherArticles.map((article) => (
+            <div>
+              <ArticlePreview article={article} showSummary={false} />
+            </div>
+          ))
+        }
+      </div>
+    </main>
+  </Container>
+</Layout>

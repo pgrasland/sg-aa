@@ -1,25 +1,19 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-
-
-import fetchApi from '../../lib/strapi';
-import type IArticle from '../../interfaces/IArticle';
-import Container from '../../components/container.astro';
-import ArticlePreview from "../../components/article-preview.astro"
-import ITag from '../../interfaces/ITag';
-import ListLayout from '../../layouts/ListLayout.astro';
+import type ITag from "../../interfaces/ITag";
+import ListLayout from "../../layouts/ListLayout.astro";
+import fetchApi from "../../lib/strapi";
 
 export async function getStaticPaths() {
-	const tags = await fetchApi<ITag[]>({
-		endpoint: 'tags', // the content type to fetch
-		wrappedByKey: 'data', // the key to unwrap the response,
-		query: { 'populate[articles][populate][0]': 'tags,media'},
-	});
+  const tags = await fetchApi<ITag[]>({
+    endpoint: "tags", // the content type to fetch
+    wrappedByKey: "data", // the key to unwrap the response,
+    query: { "populate[articles][populate][0]": "tags,media" },
+  });
 
-	return tags.map((tag) => ({
-		params: { slug: tag.attributes.slug },
-		props: tag,	
-	}));
+  return tags.map((tag) => ({
+    params: { slug: tag.attributes.slug },
+    props: tag,
+  }));
 }
 type Props = ITag;
 
@@ -27,9 +21,9 @@ const tag = Astro.props;
 
 const articles = tag.attributes.articles.data;
 
-const pinnedArticle = articles.find(article => article.attributes.pinned ) || articles[0];
-const otherArticles = articles.filter(article => article !== pinnedArticle);
-
+const pinnedArticle =
+  articles.find((article) => article.attributes.pinned) || articles[0];
+const otherArticles = articles.filter((article) => article !== pinnedArticle);
 ---
 
-<ListLayout pinnedArticle={pinnedArticle} otherArticles={otherArticles}>
+<ListLayout pinnedArticle={pinnedArticle} otherArticles={otherArticles} />
