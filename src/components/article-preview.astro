@@ -1,31 +1,48 @@
 ---
-import type IArticle from '../interfaces/IArticle';
-import { Image } from 'astro:assets'
-import MarkdownRenderer from './markdown-renderer.astro'
-import Badge from './badge.astro';
-
+import type IArticle from "../interfaces/IArticle";
+import { Image } from "astro:assets";
+import MarkdownRenderer from "./markdown-renderer.astro";
+import Badge from "./badge.astro";
 
 interface Props {
-    article: IArticle;
-    showSummary: boolean;
+  article: IArticle;
+  showSummary: boolean;
 }
 const { article, showSummary } = Astro.props;
 ---
 
-<section class="flex flex-col gap-4 border-b border-t py-4 border-gray-300 h-full">
-    <h2 class={ 'font-extrabold ' + ((showSummary)? 'text-4xl' : 'text-2xl') }><a href={'/articles/'+ article.attributes.slug}>
-        { article.attributes.title }</a></h2>
-    
-    <div class='grid grid-cols-2 gap-4 '>
-        <Image class={ !showSummary ? 'col-span-full' : ''} loading="eager" src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`} alt={article.attributes.media.data.attributes.alternativeText} width={article.attributes.media.data.attributes.width}  height={article.attributes.media.data.attributes.height}></Image>
-        { showSummary && <div class="prose prose-lg text-black line-clamp-3 first:prose-p:mt-0"><MarkdownRenderer markdown={article.attributes.summary}></MarkdownRenderer></div>     }
-    </div>
-    <ul class="list-none my-2 flex flex-row gap-4 text-lg flex-wrap ">
-        {
-            article.attributes.tags.data.map((tag) => (
-                    <li><Badge tag={tag}></Badge></li>
-                )
-            )
-        }
-    </ul>
+<section
+  class="flex h-full flex-col gap-4 border-b border-t border-gray-300 py-4"
+>
+  <h2 class={"font-extrabold " + (showSummary ? "text-4xl" : "text-2xl")}>
+    <a href={"/sg-aa/articles/" + article.attributes.slug}>
+      {article.attributes.title}</a>
+  </h2>
+
+  <div class="grid grid-cols-2 gap-4">
+    <Image
+      class={!showSummary ? "col-span-full" : ""}
+      loading="eager"
+      src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`}
+      alt={article.attributes.media.data.attributes.alternativeText}
+      width={article.attributes.media.data.attributes.width}
+      height={article.attributes.media.data.attributes.height}
+    />
+    {
+      showSummary && (
+        <div class="prose prose-lg line-clamp-3 text-black first:prose-p:mt-0">
+          <MarkdownRenderer markdown={article.attributes.summary} />
+        </div>
+      )
+    }
+  </div>
+  <ul class="my-2 flex list-none flex-row flex-wrap gap-4 text-lg">
+    {
+      article.attributes.tags.data.map((tag) => (
+        <li>
+          <Badge tag={tag} />
+        </li>
+      ))
+    }
+  </ul>
 </section>

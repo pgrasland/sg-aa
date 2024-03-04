@@ -6,6 +6,8 @@ const isBuild = import.meta.env.PROD;
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://pgrasland.github.io',
+  base: '/sg-aa',
   prefetch: isBuild ? true: false,
   integrations: [tailwind()],
   image: {
