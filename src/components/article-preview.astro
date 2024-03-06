@@ -14,14 +14,18 @@ const { article, showSummary } = Astro.props;
 <section
   class="flex h-full flex-col gap-4 border-b border-t border-gray-300 py-4"
 >
-  <h2 class={"font-extrabold " + (showSummary ? "text-4xl" : "text-2xl")}>
+  <h2
+    class={"font-extrabold text-green-700 " +
+      (showSummary ? "text-4xl" : "text-2xl")}
+  >
     <a href={"/sg-aa/articles/" + article.attributes.slug}>
-      {article.attributes.title}</a>
+      {article.attributes.title}</a
+    >
   </h2>
 
-  <div class="grid grid-cols-2 gap-4">
+  <div class="mt-4 grid grid-cols-2 gap-8">
     <Image
-      class={!showSummary ? "col-span-full" : ""}
+      class={`max-w-full h-fit border border-green-700 shadow-[1rem_-1rem] shadow-green-700 ${!showSummary ? "col-span-full" : ""}`}
       loading="eager"
       src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`}
       alt={article.attributes.media.data.attributes.alternativeText}
