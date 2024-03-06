@@ -14,10 +14,7 @@ const { article, showSummary } = Astro.props;
 <section
   class="flex h-full flex-col gap-4 border-b border-t border-gray-300 py-4"
 >
-  <h2
-    class={"font-extrabold text-green-700 " +
-      (showSummary ? "text-4xl" : "text-2xl")}
-  >
+  <h2 class={"font-extrabold " + (showSummary ? "text-4xl" : "text-2xl")}>
     <a href={"/sg-aa/articles/" + article.attributes.slug}>
       {article.attributes.title}</a
     >
