@@ -28,13 +28,13 @@ const currentPath = Astro.url.pathname;
   <nav>
     <div class="flex flex-wrap items-center">
       <a
-        class="border-1 h-32 w-32 rounded-full border-green-700 bg-white p-4 ring-2 ring-inset ring-green-700/80"
+        class="border-1 h-32 w-32 rounded-full border-green-700 bg-white p-4 ring-2 ring-inset ring-green-700"
         href="/sg-aa"
       >
         <Image src={logo} alt="Logo Agir Autrement" loading={"eager"} />
       </a>
       <div
-        class="-mx-2 flex h-fit justify-start rounded-e-full border-b border-e border-t border-green-700 px-8 py-2 shadow-[6px_5px_5px] shadow-green-700/80 md:flex-nowrap md:gap-10"
+        class="-mx-2 flex h-fit justify-start rounded-e-full border-b border-e border-t border-green-700 px-8 py-2 shadow-[6px_5px_5px] shadow-green-700 md:flex-nowrap md:gap-10"
       >
         {
           menu.map((item) => (
