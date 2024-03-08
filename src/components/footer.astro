@@ -1,6 +1,33 @@
 ---
+import { Image } from "astro:assets";
+
+import logo from "../assets/logo.png";
 ---
 
-  <footer class="flex flex-col items-center">
-  
-  </footer>
+<footer
+  class="mx-auto flex flex-row items-stretch justify-center gap-10 divide-x divide-white bg-green-700 p-4 text-white"
+>
+  <div
+    class="my-auto flex h-40 w-40 items-center justify-center rounded-full bg-white px-4"
+  >
+    <Image src={logo} alt="Logo Agir Autrement" loading={"lazy"} />
+  </div>
+  <div class="px-4">
+    <h2 class="text-xl font-bold">Nous rencontrer !</h2>
+    <address class="mt-4 space-y-4 not-italic">
+      <strong>Local de l'opposition</strong>
+      <p>
+        En bas de la mairie de Saint-Grégoire<br />
+        Rue de l'église<br />
+        35760 Saint Saint-Grégoire<br />
+      </p>
+      <p class="mt-4">Sur rendez vous</p>
+    </address>
+  </div>
+  <div class="px-4">
+    <h2 class="text-xl font-bold">Nous contacter !</h2>
+    <address class="mt-4">
+      <a href="mailto:agirautrementsg@gmail.com">agirautrementsg@gmail.com</a>
+    </address>
+  </div>
+</footer>
