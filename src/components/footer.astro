@@ -5,14 +5,14 @@ import logo from "../assets/logo.png";
 ---
 
 <footer
-  class="mx-auto flex flex-row items-stretch justify-center gap-10 divide-x divide-white bg-green-700 p-4 text-white"
+  class="mx-auto flex flex-col items-stretch justify-center gap-10 divide-y divide-white bg-green-700 p-4 text-center text-white lg:flex-row lg:divide-x lg:divide-y-0"
 >
   <div
-    class="my-auto flex h-40 w-40 items-center justify-center rounded-full bg-white px-4"
+    class="mx-auto my-auto flex h-40 w-40 items-center justify-center rounded-full bg-white px-4 lg:mx-0"
   >
     <Image src={logo} alt="Logo Agir Autrement" loading={"lazy"} />
   </div>
-  <div class="px-4">
+  <div class="p-4">
     <h2 class="text-xl font-bold">Nous rencontrer !</h2>
     <address class="mt-4 space-y-4 not-italic">
       <strong>Local de l'opposition</strong>
@@ -24,7 +24,7 @@ import logo from "../assets/logo.png";
       <p class="mt-4">Sur rendez vous</p>
     </address>
   </div>
-  <div class="px-4">
+  <div class="p-4">
     <h2 class="text-xl font-bold">Nous contacter !</h2>
     <address class="mt-4">
       <a

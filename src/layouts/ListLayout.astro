@@ -5,23 +5,28 @@ import type IArticle from "../interfaces/IArticle";
 import Layout from "./Layout.astro";
 
 interface Props {
-	pinnedArticle: IArticle;
-    otherArticles: IArticle[];
+  pinnedArticle: IArticle;
+  otherArticles: IArticle[];
 }
 
-const { pinnedArticle, otherArticles} = Astro.props;
+const { pinnedArticle, otherArticles } = Astro.props;
 ---
+
 <Layout title="Agir Autrement - Saint Grégoire">
-    <Container>
-        <main class="grid gap-10 ">
-            <ArticlePreview article={pinnedArticle} showSummary={true}/>
-            <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3 items-stretch justify-stretch">
-                {
-                    otherArticles.map(article => (
-                        <div><ArticlePreview article={article} showSummary={false} /></div>
-                    ))
-                }
+  <Container>
+    <main class="grid gap-8">
+      <ArticlePreview article={pinnedArticle} showSummary={true} />
+      <div
+        class="grid items-stretch justify-stretch space-y-4 divide-y divide-gray-300 md:grid-cols-2 lg:gap-8 lg:space-y-0 lg:divide-y-0 xl:grid-cols-3"
+      >
+        {
+          otherArticles.map((article) => (
+            <div>
+              <ArticlePreview article={article} showSummary={false} />
             </div>
-        </main>
-    </Container>
+          ))
+        }
+      </div>
+    </main>
+  </Container>
 </Layout>

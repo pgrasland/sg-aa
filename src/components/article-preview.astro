@@ -11,32 +11,31 @@ interface Props {
 const { article, showSummary } = Astro.props;
 ---
 
-<section
-  class="flex h-full flex-col gap-4 border-b border-t border-gray-300 py-4"
->
-  <h2 class={"font-extrabold " + (showSummary ? "text-4xl" : "text-2xl")}>
-    <a href={"/sg-aa/articles/" + article.attributes.slug}>
-      {article.attributes.title}</a
+<section class="flex h-full flex-col gap-4 py-4">
+  <a href={"/sg-aa/articles/" + article.attributes.slug}>
+    <h2 class={"font-extrabold " + (showSummary ? "text-4xl" : "text-2xl")}>
+      {article.attributes.title}
+    </h2>
+    <div
+      class=`mt-8 grid grid-cols-1 me-4 lg:me-0 lg:grid-cols-2 gap-8 ${!showSummary ? "lg:me-4" : ""}`
     >
-  </h2>
-
-  <div class="mt-4 grid grid-cols-2 gap-8">
-    <Image
-      class={`max-w-full h-fit border border-green-700 shadow-[1rem_-1rem] shadow-green-700 ${!showSummary ? "col-span-full" : ""}`}
-      loading="eager"
-      src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`}
-      alt={article.attributes.media.data.attributes.alternativeText}
-      width={article.attributes.media.data.attributes.width}
-      height={article.attributes.media.data.attributes.height}
-    />
-    {
-      showSummary && (
-        <div class="prose prose-lg line-clamp-3 text-black first:prose-p:mt-0">
-          <MarkdownRenderer markdown={article.attributes.summary} />
-        </div>
-      )
-    }
-  </div>
+      <Image
+        class={`max-w-full m-e-4 h-fit border border-green-700 shadow-[1rem_-1rem] shadow-green-700 col ${!showSummary ? "col-span-full" : ""}`}
+        loading="eager"
+        src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`}
+        alt={article.attributes.media.data.attributes.alternativeText}
+        width={article.attributes.media.data.attributes.width}
+        height={article.attributes.media.data.attributes.height}
+      />
+      {
+        showSummary && (
+          <div class="prose prose-lg line-clamp-6 text-black first:prose-p:-mt-0 lg:line-clamp-3">
+            <MarkdownRenderer markdown={article.attributes.summary} />
+          </div>
+        )
+      }
+    </div>
+  </a>
   <ul class="my-2 flex list-none flex-row flex-wrap gap-4 text-lg">
     {
       article.attributes.tags.data.map((tag) => (

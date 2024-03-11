@@ -23,10 +23,10 @@ const otherArticles = articles.filter((article) => article !== pinnedArticle);
 
 <Layout title="Agir Autrement - Saint Grégoire">
   <Container>
-    <main class="grid gap-10">
+    <main class="grid gap-8">
       <ArticlePreview article={pinnedArticle} showSummary={true} />
       <div
-        class="mt-10 grid items-stretch justify-stretch gap-10 md:grid-cols-2 lg:gap-10 xl:grid-cols-3"
+        class="grid items-stretch justify-stretch space-y-4 divide-y divide-gray-300 md:grid-cols-2 lg:gap-8 lg:space-y-0 lg:divide-y-0 xl:grid-cols-3"
       >
         {
           otherArticles.map((article) => (
