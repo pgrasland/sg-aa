@@ -7,6 +7,7 @@ import fetchApi from "../../lib/strapi";
 import Layout from "../../layouts/Layout.astro";
 
 import { Image } from "astro:assets";
+import Container from "../../components/container.astro";
 
 export async function getStaticPaths() {
   const articles = await fetchApi<IArticle[]>({
@@ -26,33 +27,40 @@ const article = Astro.props;
 ---
 
 <Layout title={article.attributes.title}>
-  <main class="flex w-full flex-col gap-8">
-    <h1 class="container mx-2 max-w-4xl text-6xl font-extrabold lg:mx-auto">
-      {article.attributes.title}
-    </h1>
-    <ul
-      class="container mx-2 flex max-w-4xl list-none flex-row gap-4 text-xl lg:mx-auto"
-    >
-      {
-        article.attributes.tags.data.map((tag) => (
-          <li>
-            <Badge tag={tag} />
-          </li>
-        ))
-      }
-    </ul>
-    <div class="container prose prose-lg mx-2 max-w-4xl text-black lg:mx-auto">
-      <MarkdownRenderer markdown={article.attributes.summary} />
-    </div>
+  <main class="flex w-full flex-col py-5 lg:py-8">
+    <Container class="flex w-full flex-col gap-4 lg:gap-8">
+      <h1 class="max-w-4xl text-4xl font-extrabold">
+        {article.attributes.title}
+      </h1>
+      <ul class="flex max-w-4xl list-none flex-row flex-wrap gap-4 text-xl">
+        {
+          article.attributes.tags.data.map((tag) => (
+            <li>
+              <Badge tag={tag} />
+            </li>
+          ))
+        }
+      </ul>
+      <div
+        class="prose prose-lg max-w-4xl leading-6 text-black lg:prose-lg first:prose-p:mt-0"
+      >
+        <MarkdownRenderer markdown={article.attributes.summary} />
+      </div>
+    </Container>
+
     <Image
-      class="h-auto max-h-[40rem] w-full object-cover px-4"
+      class="h-auto max-h-[60rem] w-full object-cover px-4"
       src={`${import.meta.env.STRAPI_URL}${article.attributes.media.data.attributes.url}`}
       alt={article.attributes.media.data.attributes.alternativeText}
       width={article.attributes.media.data.attributes.width}
       height={article.attributes.media.data.attributes.height}
     />
-    <div class="container prose prose-lg mx-2 max-w-4xl text-black lg:mx-auto">
-      <MarkdownRenderer markdown={article.attributes.content} />
-    </div>
+    <Container>
+      <div
+        class="prose prose-lg max-w-4xl leading-6 text-black lg:prose-lg prose-h1:text-4xl"
+      >
+        <MarkdownRenderer markdown={article.attributes.content} />
+      </div>
+    </Container>
   </main>
 </Layout>
