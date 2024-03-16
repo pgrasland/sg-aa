@@ -2,8 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 
 import ArticlePreview from "../components/article-preview.astro";
+import Event from "../components/event.astro";
+
 import Container from "../components/container.astro";
 import type IArticle from "../interfaces/IArticle";
+import type IEvent from "../interfaces/IEvent";
+
 import fetchApi from "../lib/strapi";
 
 const articles = await fetchApi<IArticle[]>({
@@ -16,6 +20,20 @@ const articles = await fetchApi<IArticle[]>({
   },
 });
 
+let oldestDateAllowed = new Date();
+oldestDateAllowed.setDate(oldestDateAllowed.getDate() - 7);
+
+const events = await fetchApi<IEvent[]>({
+  endpoint: "events", // the content type to fetch
+  wrappedByKey: "data", // the key to unwrap the response,
+  query: {
+    "filters[date][$gte]": `${oldestDateAllowed.toISOString()}`,
+    sort: "date:asc",
+    "pagination[start]": "0",
+    "pagination[limit]": "5",
+  },
+});
+
 const pinnedArticle =
   articles.find((article) => article.attributes.pinned) || articles[0];
 const otherArticles = articles.filter((article) => article !== pinnedArticle);
@@ -24,7 +42,33 @@ const otherArticles = articles.filter((article) => article !== pinnedArticle);
 <Layout title="Agir Autrement - Saint Grégoire">
   <Container>
     <main class="grid gap-8">
+      <h1
+        class="w-fit -skew-x-12 bg-green-700 p-4 text-4xl font-extrabold text-white"
+      >
+        A la une
+      </h1>
       <ArticlePreview article={pinnedArticle} showSummary={true} />
+      <h2
+        class="w-fit -skew-x-12 bg-green-700 p-4 text-4xl font-extrabold text-white"
+      >
+        Agenda
+      </h2>
+
+      <div class="grid grid-flow-row gap-4 lg:-mx-40 lg:grid-flow-col">
+        {
+          events &&
+            events.map((calendarEvent) => (
+              <div>
+                <Event event={calendarEvent} />
+              </div>
+            ))
+        }
+      </div>
+      <h2
+        class="w-fit -skew-x-12 bg-green-700 p-4 text-4xl font-extrabold text-white"
+      >
+        Actualités
+      </h2>
       <div
         class="grid items-stretch justify-stretch space-y-4 divide-y divide-gray-300 md:grid-cols-2 lg:gap-8 lg:space-y-0 lg:divide-y-0 xl:grid-cols-3"
       >

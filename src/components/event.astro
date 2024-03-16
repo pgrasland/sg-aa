@@ -1,0 +1,41 @@
+---
+import type IEvent from "../interfaces/IEvent";
+import MarkdownRenderer from "./markdown-renderer.astro";
+
+interface Props {
+  event: IEvent;
+}
+const { event } = Astro.props;
+---
+
+<section class="grid h-full w-full grid-cols-1 grid-rows-1 p-4">
+  <div
+    class="z-0 col-start-1 row-start-1 h-full w-full -skew-x-3 transform-gpu flex-col border border-green-700 shadow-[8px_-8px] shadow-green-700"
+  >
+  </div>
+  <div
+    class="z-1 col-start-1 row-start-1 flex flex-col items-center px-4 py-2 text-black first:prose-p:-mt-0"
+  >
+    <h3 class="flex flex-col items-center gap-2 pt-4 text-lg font-bold">
+      <span>
+        {
+          new Date(event.attributes.date).toLocaleDateString("fr", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        }</span
+      ><span>
+        {
+          new Date(event.attributes.date).toLocaleTimeString("fr", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        }</span
+      >
+    </h3>
+    <div class="prose prose-sm line-clamp-5">
+      <MarkdownRenderer markdown={event.attributes.details} />
+    </div>
+  </div>
+</section>
