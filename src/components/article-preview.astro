@@ -36,6 +36,12 @@ const { article, showSummary } = Astro.props;
       }
     </div>
   </a>
+  <a
+    class="mx-auto w-fit px-2"
+    href={"/sg-aa/articles/" + article.attributes.slug}
+    >[ <span class="underline underline-offset-2">Voir l'article complet</span> ]</a
+  >
+
   <ul class="my-2 flex list-none flex-row flex-wrap gap-4 text-lg">
     {
       article.attributes.tags.data.map((tag) => (
