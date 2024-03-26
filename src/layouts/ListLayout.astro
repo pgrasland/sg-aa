@@ -5,7 +5,7 @@ import type IArticle from "../interfaces/IArticle";
 import Layout from "./Layout.astro";
 
 interface Props {
-  pinnedArticle: IArticle;
+  pinnedArticle: IArticle | null;
   otherArticles: IArticle[];
 }
 
@@ -15,7 +15,11 @@ const { pinnedArticle, otherArticles } = Astro.props;
 <Layout title="Agir Autrement - Saint Grégoire">
   <Container>
     <main class="grid gap-8">
-      <ArticlePreview article={pinnedArticle} showSummary={true} />
+      {
+        pinnedArticle && (
+          <ArticlePreview article={pinnedArticle} showSummary={true} />
+        )
+      }
       <div
         class="grid items-stretch justify-stretch space-y-4 divide-y divide-gray-300 md:grid-cols-2 lg:gap-8 lg:space-y-0 lg:divide-y-0 xl:grid-cols-3"
       >
