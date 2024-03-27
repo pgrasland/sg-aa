@@ -37,7 +37,7 @@ const currentPath = Astro.url.pathname;
       menu.map((item) => (
         <a
           href={item.href}
-          class={`px-5 text-xl hover:text-green-800  ${currentPath.indexOf(item.href) === 0 ? "text-green-800 underline underline-offset-8 " : ""}`}
+          class={`px-5 text-xl hover:text-green-800 hover:underline focus:underline focus:text-green-800 underline-offset-8 ${currentPath.indexOf(item.href) === 0 ? "text-green-800 underline " : ""}`}
         >
           {item.label}
         </a>
