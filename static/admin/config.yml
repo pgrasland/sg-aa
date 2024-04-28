@@ -1,0 +1,77 @@
+media_folder: "static/images"
+public_folder: "/decapcms-astro/images"
+local_backend: true
+backend:
+  name: git-gateway
+
+# backend:
+#   name: gitlab
+#   repo: pgrasland/decapcms-astro
+#   branch: main
+#   auth_type: pkce
+#   app_id: 35c9c5be432e4c79baaaf1bfd1a2a47818802bc6b30405334146894bb5e22b7b
+collections:
+  - name: "events" # Used in routes, e.g., /admin/collections/blog
+    label: "Agenda" # Used in the UI
+    folder: "src/content/events" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de création", name: "createdAt", widget: "datetime" }
+      - { label: "Date de mise à jour", name: "updatedAt", widget: "datetime" }
+      - {
+          label: "Date de publication",
+          name: "publishedAt",
+          widget: "datetime",
+        }
+      - { label: "Date de l'événement", name: "date", widget: "datetime" }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+  - name: "tags" # Used in routes, e.g., /admin/collections/blog
+    label: "Tag" # Used in the UI
+    folder: "src/content/tags" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Tag", name: "title", widget: "string" }
+      - {
+          label: "Color",
+          name: "color",
+          widget: "select",
+          options:
+            ["red", "yellow", "green", "blue", "indigo", "purple", "pink"],
+        }
+  - name: "articles" # Used in routes, e.g., /admin/collections/blog
+    label: "Article" # Used in the UI
+    folder: "src/content/articles" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Titre", name: "title", widget: "string" }
+      - {
+          label: "Mise en avant",
+          name: "pinned",
+          widget: "boolean",
+          default: false,
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "relation",
+          collection: "tags",
+          multiple: true,
+          search_fields: ["title"],
+          value_field: "title",
+        }
+      - { label: "Résumé", name: "summary", widget: "markdown" }
+      - {
+          label: "Image",
+          name: "media",
+          widget: "image",
+          media_folder: "/src/assets/images",
+        }
+      - { label: "Date de création", name: "createdAt", widget: "datetime" }
+      - { label: "Date de mise à jour", name: "updatedAt", widget: "datetime" }
+      - {
+          label: "Date de publication",
+          name: "publishedAt",
+          widget: "datetime",
+        }
+      - { label: "Contenu", name: "body", widget: "markdown" }

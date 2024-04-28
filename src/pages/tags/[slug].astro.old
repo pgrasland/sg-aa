@@ -1,4 +1,4 @@
----
+<!-- ---
 import type ITag from "../../interfaces/ITag";
 import ListLayout from "../../layouts/ListLayout.astro";
 import fetchApi from "../../lib/strapi";
@@ -26,4 +26,4 @@ const pinnedArticle =
 const otherArticles = articles.filter((article) => article !== pinnedArticle);
 ---
 
-<ListLayout pinnedArticle={pinnedArticle} otherArticles={otherArticles} />
+<ListLayout pinnedArticle={pinnedArticle} otherArticles={otherArticles} /> -->

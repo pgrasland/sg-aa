@@ -1,23 +1,21 @@
-import type IMedia from "./IMedia";
-import type ITag from "./ITag";
+import { z } from "astro:content";
+import { tagSchema } from "./ITag";
 
-export default interface IArticle {
-  id: number;
-  attributes: {
-    slug: string;
-    title: string;
-    content: string;
-    summary: string;
-    commentary: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    pinned: boolean;
-    tags: {
-      data: ITag[];
-    };
-    media: {
-      data: IMedia;
-    };
-  };
-}
+export const articleSchema = z.object({
+  title: z.string(),
+  summary: z.string(),
+  media: z.string(),
+  pinned: z.boolean(),
+  tags: z.array(tagSchema),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date().optional(),
+  publishedAt: z.coerce.date(),
+});
+
+export type IArticle = {
+  id: string;
+  slud: string;
+  body: string;
+  collection: "article";
+  data: z.infer<typeof articleSchema>;
+};

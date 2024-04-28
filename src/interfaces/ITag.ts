@@ -1,16 +1,14 @@
-import type IArticle from "./IArticle";
+import { z } from "astro:content";
 
-export default interface ITag {
-  id: number;
-  attributes: {
-    tag: string;
-    slug: string;
-    color: 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    articles: {
-      data: IArticle[];
-    };
-  };
-}
+export const tagSchema = z.object({
+  title: z.coerce.string(),
+  color: z.enum(["red", "yellow", "green", "blue", "indigo", "purple", "pink"]),
+});
+
+export type ITag = {
+  id: string;
+  slud: string;
+  body: string;
+  collection: "tags";
+  data: z.infer<typeof tagSchema>;
+};

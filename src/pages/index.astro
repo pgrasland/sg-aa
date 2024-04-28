@@ -5,38 +5,34 @@ import ArticlePreview from "../components/article-preview.astro";
 import Event from "../components/event.astro";
 
 import Container from "../components/container.astro";
-import type IArticle from "../interfaces/IArticle";
-import type IEvent from "../interfaces/IEvent";
 
-import fetchApi from "../lib/strapi";
+import { getCollection } from "astro:content";
+import type { IEvent } from "../interfaces/IEvent";
+import type { IArticle } from "../interfaces/IArticle";
 
-const articles = await fetchApi<IArticle[]>({
-  endpoint: "articles", // the content type to fetch
-  wrappedByKey: "data", // the key to unwrap the response,
-  query: {
-    populate: "tags,media",
-    "sort[0]": "pinned:desc",
-    "sort[1]": "publishedAt:desc",
-  },
-});
+// let articles: IArticle[] = await getCollection("articles");
+
+// articles.sort(
+//   (a: IArticle, b: IArticle) =>
+//     (a.data.pinned === b.data.pinned ? 0 : a.data.pinned ? -1 : 1) ||
+//     a.data.publishedAt.getTime() - b.data.publishedAt.getTime()
+// );
+
+let articles: IArticle[] = [];
 
 let oldestDateAllowed = new Date();
 oldestDateAllowed.setDate(oldestDateAllowed.getDate() - 7);
 
-const events = await fetchApi<IEvent[]>({
-  endpoint: "events", // the content type to fetch
-  wrappedByKey: "data", // the key to unwrap the response,
-  query: {
-    "filters[date][$gte]": `${oldestDateAllowed.toISOString()}`,
-    sort: "date:asc",
-    "pagination[start]": "0",
-    "pagination[limit]": "5",
-  },
-});
+let events: IEvent[] = await getCollection("events");
+
+events = events
+  .sort((a: IEvent, b: IEvent) => a.data.date.getTime() - b.data.date.getTime())
+  .filter((event) => event.data.date > oldestDateAllowed)
+  .slice(0, 5);
 
 const pinnedArticle =
   articles.length > 0
-    ? articles.find((article) => article.attributes.pinned) || articles[0]
+    ? articles.find((article) => article.data.pinned) || articles[0]
     : null;
 const otherArticles =
   articles.length > 0
